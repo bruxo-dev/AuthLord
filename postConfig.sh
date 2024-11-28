@@ -17,17 +17,15 @@ else
 fi
 
 echo "Checking for an existing application key in .env..."
-if ! grep -q "^APP_KEY=" .env; then
-    echo "No application key found in .env. Generating a new key..."
-    php artisan key:generate
-    if [ $? -eq 0 ]; then
-        echo "Application key generated successfully."
-    else
-        echo "Error: Failed to generate application key."
-        exit 1
-    fi
+APP_KEY=$(grep '^APP_KEY=' .env | cut -d '=' -f2)
+APP_KEY_LENGTH=${#APP_KEY}
+echo "Current APP_KEY length: $APP_KEY_LENGTH"
+
+if [ "$APP_KEY_LENGTH" -lt 32 ]; then
+    echo "APP_KEY is missing or too short. Generating a new key..."
+    php artisan key:generate --force
 else
-    echo "An application key is already set in .env."
+    echo "APP_KEY is valid and has the correct length."
 fi
 
 echo "Adjusting permissions for AuthLord files..."
