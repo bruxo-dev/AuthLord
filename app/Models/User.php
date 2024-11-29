@@ -43,3 +43,5 @@ class User extends Authenticatable
         return $this->roles()->where('name', $roleName)->exists();
     }
 }
+
+//Now starting Phase 2...
