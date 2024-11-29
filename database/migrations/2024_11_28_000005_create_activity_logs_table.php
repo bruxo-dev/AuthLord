@@ -9,11 +9,13 @@ class CreateActivityLogsTable extends Migration
     public function up()
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->id(); // Primary key 'id'
-            $table->foreignId('user_id')->constrained('users'); // Foreign key to users table
-            $table->string('action'); // Action performed (e.g., login, logout)
-            $table->string('ip'); // IP address from where the action was performed
-            $table->timestamps(); // Created and updated timestamps
+            $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('action');
+            $table->string('ip_address');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

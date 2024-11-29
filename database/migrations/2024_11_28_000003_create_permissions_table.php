@@ -9,10 +9,10 @@ class CreatePermissionsTable extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->id(); // Primary key 'id'
-            $table->string('nome')->unique(); // Permission name
-            $table->text('descricao')->nullable(); // Permission description
-            $table->timestamps(); // Created and updated timestamps
+            $table->id();
+            $table->string('name')->unique();
+            $table->text('description')->nullable();
+            $table->timestamps();
         });
     }
 
